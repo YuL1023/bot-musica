@@ -19,7 +19,7 @@ ytdl_format_options = {
     'outtmpl': 'downloads/%(title)s.%(ext)s',
     'quiet': True,
     'noplaylist': True,
-    'default_search': 'ytsearch',
+    'default_search': 'auto',  # Para que funcione con URLs directas y búsquedas
 }
 ffmpeg_options = {
     'options': '-vn',
@@ -36,7 +36,7 @@ class YTDLSource(discord.PCMVolumeTransformer):
         self.url = data.get('webpage_url')
 
     @classmethod
-    async def from_url(cls, url, *, loop=None, stream=False, volume=0.5):
+    async def from_url(cls, url, *, loop=None, stream=True, volume=0.5):
         loop = loop or asyncio.get_event_loop()
         data = await loop.run_in_executor(None, lambda: ytdl.extract_info(url, download=not stream))
         if 'entries' in data:
@@ -87,7 +87,8 @@ async def play(ctx, *, search: str):
 
     async with ctx.typing():
         try:
-            player = await YTDLSource.from_url(search, loop=bot.loop, stream=False, volume=volumen_actual)
+            # Usamos stream=True para reproducir sin descargar completo
+            player = await YTDLSource.from_url(search, loop=bot.loop, stream=True, volume=volumen_actual)
         except Exception as e:
             await ctx.send(f"❌ Error al reproducir el audio: {e}")
             return
@@ -123,7 +124,8 @@ async def volumen(ctx, value: int):
         await ctx.send("🔊 El volumen debe estar entre 0 y 100.")
         return
     volumen_actual = value / 100
-    ctx.voice_client.source.volume = volumen_actual
+    if ctx.voice_client.source:
+        ctx.voice_client.source.volume = volumen_actual
     await ctx.send(f"🔊 Volumen ajustado a {value}%")
 
 @bot.command()
