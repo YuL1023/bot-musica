@@ -3,10 +3,6 @@ from discord.ext import commands
 import yt_dlp as youtube_dl
 import asyncio
 import os
-from keep_alive import run  # 👉 Importamos keep_alive
-
-# Mantener activo (solo necesario en Render, Railway o Replit)
-run()
 
 TOKEN = os.getenv("TOKEN")
 
@@ -185,6 +181,3 @@ async def ultima(ctx):
         await ctx.send(f"🔂 Última canción reproducida: **{ultima_cancion.title}**")
     else:
         await ctx.send("❌ Aún no se ha reproducido ninguna canción.")
-
-if __name__ == "__main__":
-    bot.run(TOKEN)
