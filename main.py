@@ -51,7 +51,7 @@ volumen_actual = 0.5
 @bot.event
 async def on_ready():
     print(f'✅ Bot conectado como {bot.user}')
-    await bot.change_presence(activity=discord.Game(name="¡Usa !play para música!"))
+    await bot.change_presence(activity=discord.Game(name="¡Usa !play o !g para música!"))
 
 async def reproducir_siguiente(ctx):
     global ultima_cancion
@@ -65,7 +65,7 @@ async def reproducir_siguiente(ctx):
             embed.set_thumbnail(url=player.thumbnail)
         await ctx.send(embed=embed)
     else:
-        await bot.change_presence(activity=discord.Game(name="¡Usa !play para música!"))
+        await bot.change_presence(activity=discord.Game(name="¡Usa !play o !g para música!"))
 
 @bot.command(aliases=['g', 'G', 'p'])
 async def play(ctx, *, search: str):
@@ -105,7 +105,7 @@ async def play(ctx, *, search: str):
             queue.append(player)
             await ctx.send(f"📥 Añadido a la cola: **{player.title}**")
 
-@bot.command(aliases=['cola', 'lista'])
+@bot.command(aliases=['cola', 'lista', 'queue'])
 async def queue_(ctx):
     if not queue:
         await ctx.send("📭 La cola está vacía.")
