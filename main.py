@@ -181,3 +181,5 @@ async def ultima(ctx):
         await ctx.send(f"🔂 Última canción reproducida: **{ultima_cancion.title}**")
     else:
         await ctx.send("❌ Aún no se ha reproducido ninguna canción.")
+
+bot.run(TOKEN)
