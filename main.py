@@ -17,7 +17,7 @@ ytdl_format_options = {
     'outtmpl': 'downloads/%(title)s.%(ext)s',
     'quiet': True,
     'noplaylist': True,
-    'default_search': 'auto',  # Acepta tanto URLs como títulos
+    'default_search': 'auto',
 }
 ffmpeg_options = {
     'options': '-vn',
@@ -181,5 +181,3 @@ async def ultima(ctx):
         await ctx.send(f"🔂 Última canción reproducida: **{ultima_cancion.title}**")
     else:
         await ctx.send("❌ Aún no se ha reproducido ninguna canción.")
-
-bot.run(TOKEN)
