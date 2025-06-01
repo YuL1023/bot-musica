@@ -3,6 +3,10 @@ from discord.ext import commands
 import yt_dlp as youtube_dl
 import asyncio
 import os
+from keep_alive import run  # 👉 Importamos keep_alive
+
+# Mantener activo (solo necesario en Render, Railway o Replit)
+run()
 
 TOKEN = os.getenv("TOKEN")
 
