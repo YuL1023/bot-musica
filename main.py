@@ -2,9 +2,8 @@ import discord
 from discord.ext import commands
 import yt_dlp as youtube_dl
 import asyncio
-import os  # Para usar variables de entorno
+import os
 
-# Token desde variable de entorno
 TOKEN = os.getenv("TOKEN")
 
 intents = discord.Intents.default()
@@ -13,13 +12,12 @@ intents.voice_states = True
 
 bot = commands.Bot(command_prefix='!', intents=intents)
 
-# Configuración de yt-dlp
 ytdl_format_options = {
     'format': 'bestaudio/best',
     'outtmpl': 'downloads/%(title)s.%(ext)s',
     'quiet': True,
     'noplaylist': True,
-    'default_search': 'auto',  # Para que funcione con URLs directas y búsquedas
+    'default_search': 'auto',  # Acepta tanto URLs como títulos
 }
 ffmpeg_options = {
     'options': '-vn',
@@ -87,7 +85,6 @@ async def play(ctx, *, search: str):
 
     async with ctx.typing():
         try:
-            # Usamos stream=True para reproducir sin descargar completo
             player = await YTDLSource.from_url(search, loop=bot.loop, stream=True, volume=volumen_actual)
         except Exception as e:
             await ctx.send(f"❌ Error al reproducir el audio: {e}")
